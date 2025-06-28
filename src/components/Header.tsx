@@ -62,12 +62,12 @@ const Header = () => {
           <div className="flex justify-between items-center">
             {/* Left Side - Admin and Register */}
             <div className="flex space-x-6">
-              <a 
-                href="#admin" 
+              <Link 
+                to="/admin" 
                 className="text-gray-300 hover:text-yellow-400 transition-colors duration-200 font-medium"
               >
                 Admin
-              </a>
+              </Link>
               <Link 
                 to="/login" 
                 className="text-gray-300 hover:text-yellow-400 transition-colors duration-200 font-medium"
@@ -149,6 +149,14 @@ const Header = () => {
                   </button>
                 )}
               </div>
+
+              {/* Payment Link */}
+              <Link
+                to="/payment"
+                className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm font-medium transition-colors duration-200"
+              >
+                Tithe/Offering
+              </Link>
             </div>
           </div>
         </div>
@@ -257,9 +265,9 @@ const Header = () => {
               <div className="px-6 py-2 border-b border-gray-200 mb-2">
                 <div className="flex justify-between items-center text-sm">
                   <div className="flex space-x-4">
-                    <a href="#admin" className="text-gray-600 hover:text-blue-800">
+                    <Link to="/admin" className="text-gray-600 hover:text-blue-800">
                       Admin
-                    </a>
+                    </Link>
                     <Link to="/login" className="text-gray-600 hover:text-blue-800">
                       Register
                     </Link>
@@ -278,6 +286,15 @@ const Header = () => {
                       <Youtube size={16} />
                     </a>
                   </div>
+                </div>
+                <div className="mt-2">
+                  <Link
+                    to="/payment"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                  >
+                    Tithe/Offering
+                  </Link>
                 </div>
               </div>
 
