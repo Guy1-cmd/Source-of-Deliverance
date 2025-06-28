@@ -191,36 +191,27 @@ const Home = () => {
               }`}
             >
               <div 
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105"
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{
                   backgroundImage: `url(${image.url})`
                 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-800/60"></div>
+                {/* Reduced overlay opacity to make images more visible */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-900/40 to-blue-800/30"></div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Hero Content */}
+        {/* Hero Content - Simplified without image descriptions */}
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
             Welcome to<br />
             <span className="text-yellow-400">Source of Deliverance</span>
           </h1>
-          <p className="text-xl md:text-2xl mb-4 font-light leading-relaxed">
+          <p className="text-xl md:text-2xl mb-8 font-light leading-relaxed">
             A place where faith meets community, and miracles happen daily
           </p>
-          
-          {/* Current Image Description */}
-          <div className="mb-8 bg-black/30 backdrop-blur-sm rounded-lg p-4 max-w-md mx-auto">
-            <h3 className="text-lg font-semibold text-yellow-300 mb-1">
-              {heroImages[currentHeroImageIndex].title}
-            </h3>
-            <p className="text-sm text-gray-200">
-              {heroImages[currentHeroImageIndex].description}
-            </p>
-          </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
