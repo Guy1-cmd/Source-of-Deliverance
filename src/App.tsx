@@ -8,6 +8,7 @@ import Services from './pages/Services';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </main>
         <Footer />
