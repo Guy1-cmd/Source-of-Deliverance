@@ -1,7 +1,67 @@
-import React from 'react';
-import { Heart, Users, Book, Star, Target, Eye, Award } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Heart, Users, Book, Star, Target, Eye, Award, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const About = () => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  // Story section images
+  const storyImages = [
+    {
+      url: "https://images.pexels.com/photos/8468707/pexels-photo-8468707.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      title: "Church Community Fellowship",
+      description: "Our vibrant church family gathering together"
+    },
+    {
+      url: "https://images.pexels.com/photos/8468660/pexels-photo-8468660.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      title: "Sunday Worship Service",
+      description: "Experiencing God's presence in worship"
+    },
+    {
+      url: "https://images.pexels.com/photos/7169074/pexels-photo-7169074.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      title: "Community Outreach",
+      description: "Serving our community with love"
+    },
+    {
+      url: "https://images.pexels.com/photos/6994822/pexels-photo-6994822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      title: "Youth Ministry",
+      description: "Empowering the next generation"
+    },
+    {
+      url: "https://images.pexels.com/photos/8468659/pexels-photo-8468659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      title: "Baptism Ceremony",
+      description: "Celebrating new life in Christ"
+    }
+  ];
+
+  // Auto-slide functionality
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => 
+        prevIndex === storyImages.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, storyImages.length]);
+
+  const goToPrevious = () => {
+    setCurrentImageIndex(currentImageIndex === 0 ? storyImages.length - 1 : currentImageIndex - 1);
+    setIsAutoPlaying(false);
+  };
+
+  const goToNext = () => {
+    setCurrentImageIndex(currentImageIndex === storyImages.length - 1 ? 0 : currentImageIndex + 1);
+    setIsAutoPlaying(false);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentImageIndex(index);
+    setIsAutoPlaying(false);
+  };
+
   const values = [
     {
       icon: <Heart className="w-8 h-8 text-yellow-500" />,
@@ -58,7 +118,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Our Story Section */}
+      {/* Our Story Section with Slideshow */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -80,12 +140,91 @@ const About = () => {
                 nurturing the found, and equipping believers to make a difference in the world.
               </p>
             </div>
+            
+            {/* Image Slideshow */}
             <div className="relative">
-              <img
-                src="https://images.pexels.com/photos/8468707/pexels-photo-8468707.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                alt="Church community"
-                className="rounded-lg shadow-xl w-full h-96 object-cover"
-              />
+              <div className="relative h-96 rounded-xl overflow-hidden shadow-2xl group">
+                {/* Main Image */}
+                <div className="relative h-full">
+                  <img
+                    src={storyImages[currentImageIndex].url}
+                    alt={storyImages[currentImageIndex].title}
+                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  
+                  {/* Image Info */}
+                  <div className="absolute bottom-6 left-6 text-white">
+                    <h3 className="text-xl font-bold mb-1">{storyImages[currentImageIndex].title}</h3>
+                    <p className="text-sm text-gray-200">{storyImages[currentImageIndex].description}</p>
+                  </div>
+                </div>
+
+                {/* Navigation Arrows */}
+                <button
+                  onClick={goToPrevious}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                
+                <button
+                  onClick={goToNext}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110"
+                >
+                  <ChevronRight size={20} />
+                </button>
+
+                {/* Auto-play indicator */}
+                <div className="absolute top-4 right-4">
+                  <button
+                    onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                    className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
+                      isAutoPlaying 
+                        ? 'bg-green-500/80 text-white' 
+                        : 'bg-white/20 text-white hover:bg-white/30'
+                    }`}
+                  >
+                    {isAutoPlaying ? 'Auto' : 'Manual'}
+                  </button>
+                </div>
+
+                {/* Dots Indicator */}
+                <div className="absolute bottom-4 right-6 flex space-x-2">
+                  {storyImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToSlide(index)}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 hover:scale-110 ${
+                        index === currentImageIndex 
+                          ? 'bg-white scale-110 shadow-lg' 
+                          : 'bg-white/50 hover:bg-white/70'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Thumbnail Navigation */}
+              <div className="flex space-x-2 mt-4 overflow-x-auto pb-2">
+                {storyImages.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`flex-shrink-0 w-16 h-12 rounded-lg overflow-hidden transition-all duration-300 ${
+                      index === currentImageIndex 
+                        ? 'ring-2 ring-blue-500 scale-105' 
+                        : 'opacity-70 hover:opacity-100'
+                    }`}
+                  >
+                    <img
+                      src={image.url}
+                      alt={image.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
