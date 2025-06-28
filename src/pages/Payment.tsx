@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { DollarSign, CreditCard, Calendar, User, CheckCircle, ArrowRight, Heart, Gift, Cross, Banknote } from 'lucide-react';
+import PaymentReport from '../components/PaymentReport';
 
 const Payment = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showReport, setShowReport] = useState(false);
   const [paymentType, setPaymentType] = useState('tithe');
+  const [paymentData, setPaymentData] = useState<any>(null);
   
   const [formData, setFormData] = useState({
     memberEmail: '',
@@ -43,30 +46,62 @@ const Payment = () => {
     }));
   };
 
+  const generateTransactionId = () => {
+    const timestamp = Date.now().toString();
+    const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+    return `SOD-${timestamp.slice(-6)}-${random}`;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Payment submitted:', formData);
+    
+    // Generate transaction data
+    const transactionId = generateTransactionId();
+    const timestamp = new Date().toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      timeZoneName: 'short'
+    });
+
+    const completePaymentData = {
+      ...formData,
+      transactionId,
+      timestamp
+    };
+
+    console.log('Payment submitted:', completePaymentData);
+    setPaymentData(completePaymentData);
     setIsSubmitted(true);
     
-    // Reset form after 5 seconds
+    // Show report after 2 seconds
     setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        memberEmail: '',
-        memberName: '',
-        paymentType: 'tithe',
-        amount: '',
-        paymentMethod: '',
-        cardNumber: '',
-        expiryDate: '',
-        cvv: '',
-        cardholderName: '',
-        mobileNumber: '',
-        reference: '',
-        notes: ''
-      });
-      setPaymentType('tithe');
-    }, 5000);
+      setShowReport(true);
+    }, 2000);
+  };
+
+  const handleCloseReport = () => {
+    setShowReport(false);
+    setIsSubmitted(false);
+    setFormData({
+      memberEmail: '',
+      memberName: '',
+      paymentType: 'tithe',
+      amount: '',
+      paymentMethod: '',
+      cardNumber: '',
+      expiryDate: '',
+      cvv: '',
+      cardholderName: '',
+      mobileNumber: '',
+      reference: '',
+      notes: ''
+    });
+    setPaymentType('tithe');
+    setPaymentData(null);
   };
 
   const formatCardNumber = (value: string) => {
@@ -104,16 +139,17 @@ const Payment = () => {
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-12">
         <div className="w-full max-w-4xl mx-auto">
           {/* Success Message */}
-          {isSubmitted && (
+          {isSubmitted && !showReport && (
             <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-2xl p-8 text-center mb-8 text-white shadow-2xl">
               <CheckCircle className="w-16 h-16 mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Payment Successful!</h3>
-              <p className="text-green-100">Thank you for your generous contribution. May God bless you abundantly!</p>
+              <p className="text-green-100 mb-4">Thank you for your generous contribution. May God bless you abundantly!</p>
               <div className="mt-4 bg-white/20 rounded-lg p-4">
                 <p className="text-sm">
                   <strong>Amount:</strong> ${formData.amount} | 
                   <strong> Type:</strong> {formData.paymentType === 'tithe' ? 'Tithe' : 'Offering'}
                 </p>
+                <p className="text-xs mt-2">Generating your receipt...</p>
               </div>
             </div>
           )}
@@ -471,6 +507,14 @@ const Payment = () => {
           </div>
         </div>
       </div>
+
+      {/* Payment Report Modal */}
+      {showReport && paymentData && (
+        <PaymentReport
+          paymentData={paymentData}
+          onClose={handleCloseReport}
+        />
+      )}
     </div>
   );
 };
