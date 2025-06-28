@@ -145,6 +145,19 @@ const Login = () => {
                 </button>
               </form>
 
+              {/* Registration Link */}
+              <div className="mt-6 text-center">
+                <p className="text-gray-600">
+                  Don't have an account?{' '}
+                  <Link
+                    to="/register"
+                    className="text-green-600 hover:text-green-800 font-semibold transition-colors hover:underline"
+                  >
+                    Join our church family
+                  </Link>
+                </p>
+              </div>
+
               {/* Social Login */}
               <div className="mt-8">
                 <div className="relative">
