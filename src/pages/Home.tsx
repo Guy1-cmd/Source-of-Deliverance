@@ -32,8 +32,8 @@ const Home = () => {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center">
+      {/* Hero Section - Updated padding to account for both menus */}
+      <section className="relative min-h-screen flex items-center justify-center pt-20">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{

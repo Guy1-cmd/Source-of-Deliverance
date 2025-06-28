@@ -80,7 +80,7 @@ const Gallery = () => {
   };
 
   return (
-    <div className="pt-20">
+    <div className="pt-28">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-r from-blue-800 to-blue-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
