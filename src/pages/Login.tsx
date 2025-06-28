@@ -67,8 +67,8 @@ const Login = () => {
               Source of Deliverance
             </div>
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            {isLogin ? 'Welcome Back' : 'Join Our Family'}
+          <h1 className="text-3xl font-bold text-green-600 mb-2">
+            {isLogin ? 'Register' : 'Join Our Family'}
           </h1>
           <p className="text-gray-600">
             {isLogin 
@@ -114,7 +114,7 @@ const Login = () => {
                         required={!isLogin}
                         value={formData.firstName}
                         onChange={handleInputChange}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
                         placeholder="John"
                       />
                     </div>
@@ -132,7 +132,7 @@ const Login = () => {
                         required={!isLogin}
                         value={formData.lastName}
                         onChange={handleInputChange}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
                         placeholder="Doe"
                       />
                     </div>
@@ -154,7 +154,7 @@ const Login = () => {
                     required
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -174,7 +174,7 @@ const Login = () => {
                     required
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                    className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
                     placeholder="••••••••"
                   />
                   <button
@@ -202,7 +202,7 @@ const Login = () => {
                       required={!isLogin}
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
-                      className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                      className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
                       placeholder="••••••••"
                     />
                     <button
@@ -224,14 +224,14 @@ const Login = () => {
                     name="rememberMe"
                     checked={formData.rememberMe}
                     onChange={handleInputChange}
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                    className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
                   />
                   <span className="ml-2 text-sm text-gray-600">
                     {isLogin ? 'Remember me' : 'I agree to the terms and conditions'}
                   </span>
                 </label>
                 {isLogin && (
-                  <a href="#" className="text-sm text-blue-600 hover:text-blue-800 font-semibold">
+                  <a href="#" className="text-sm text-green-600 hover:text-green-800 font-semibold">
                     Forgot password?
                   </a>
                 )}
@@ -240,9 +240,9 @@ const Login = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-800 to-blue-900 hover:from-blue-900 hover:to-blue-800 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
-                {isLogin ? 'Sign In' : 'Create Account'}
+                {isLogin ? 'Login' : 'Create Account'}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </button>
             </form>
@@ -253,7 +253,7 @@ const Login = () => {
                 {isLogin ? "Don't have an account?" : "Already have an account?"}
                 <button
                   onClick={toggleForm}
-                  className="ml-2 text-blue-600 hover:text-blue-800 font-bold transition-colors"
+                  className="ml-2 text-green-600 hover:text-green-800 font-bold transition-colors"
                 >
                   {isLogin ? 'Sign up here' : 'Sign in here'}
                 </button>
@@ -297,7 +297,7 @@ const Login = () => {
         <div className="text-center mt-8">
           <Link
             to="/"
-            className="text-blue-600 hover:text-blue-800 font-semibold transition-colors"
+            className="text-green-600 hover:text-green-800 font-semibold transition-colors"
           >
             ← Back to Home
           </Link>
