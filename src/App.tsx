@@ -5,6 +5,9 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
+import Publication from './pages/Publication';
+import Announcement from './pages/Announcement';
+import SpecialEvent from './pages/SpecialEvent';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
@@ -21,6 +24,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/publication" element={<Publication />} />
+            <Route path="/announcement" element={<Announcement />} />
+            <Route path="/special-event" element={<SpecialEvent />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Search, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { Menu, X, Search, Facebook, Instagram, Twitter, Youtube, ChevronDown } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isPublicationDropdownOpen, setIsPublicationDropdownOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -23,6 +24,16 @@ const Header = () => {
     { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
     { label: 'Services', path: '/services' },
+    { 
+      label: 'Publication', 
+      path: '/publication',
+      hasDropdown: true,
+      subItems: [
+        { label: 'Publication', path: '/publication' },
+        { label: 'Announcement', path: '/announcement' },
+        { label: 'Special Event', path: '/special-event' }
+      ]
+    },
     { label: 'Gallery', path: '/gallery' },
     { label: 'Contact', path: '/contact' }
   ];
@@ -33,6 +44,14 @@ const Header = () => {
     console.log('Searching for:', searchQuery);
     setIsSearchOpen(false);
     setSearchQuery('');
+  };
+
+  const handlePublicationMouseEnter = () => {
+    setIsPublicationDropdownOpen(true);
+  };
+
+  const handlePublicationMouseLeave = () => {
+    setIsPublicationDropdownOpen(false);
   };
 
   return (
@@ -130,6 +149,14 @@ const Header = () => {
                   </button>
                 )}
               </div>
+
+              {/* Payment Link */}
+              <Link
+                to="/payment"
+                className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm font-medium transition-colors duration-200"
+              >
+                Tithe/Offering
+              </Link>
             </div>
           </div>
         </div>
@@ -152,19 +179,71 @@ const Header = () => {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-8">
               {navItems.map((item) => (
-                <Link
+                <div
                   key={item.path}
-                  to={item.path}
-                  className={`font-medium transition-colors duration-300 hover:text-yellow-500 ${
-                    location.pathname === item.path 
-                      ? 'text-yellow-500' 
-                      : isScrolled || !isHomePage 
-                        ? 'text-gray-700' 
-                        : 'text-white'
-                  }`}
+                  className="relative"
+                  onMouseEnter={item.hasDropdown ? handlePublicationMouseEnter : undefined}
+                  onMouseLeave={item.hasDropdown ? handlePublicationMouseLeave : undefined}
                 >
-                  {item.label}
-                </Link>
+                  {item.hasDropdown ? (
+                    <div className="relative">
+                      <button
+                        className={`font-medium transition-colors duration-300 hover:text-yellow-500 flex items-center ${
+                          location.pathname.startsWith('/publication') || 
+                          location.pathname === '/announcement' || 
+                          location.pathname === '/special-event'
+                            ? 'text-yellow-500' 
+                            : isScrolled || !isHomePage 
+                              ? 'text-gray-700' 
+                              : 'text-white'
+                        }`}
+                      >
+                        {item.label}
+                        <ChevronDown 
+                          size={16} 
+                          className={`ml-1 transition-transform duration-200 ${
+                            isPublicationDropdownOpen ? 'rotate-180' : ''
+                          }`} 
+                        />
+                      </button>
+                      
+                      {/* Dropdown Menu */}
+                      <div className={`absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 transition-all duration-200 ${
+                        isPublicationDropdownOpen 
+                          ? 'opacity-100 visible transform translate-y-0' 
+                          : 'opacity-0 invisible transform -translate-y-2'
+                      }`}>
+                        {item.subItems?.map((subItem) => (
+                          <Link
+                            key={subItem.path}
+                            to={subItem.path}
+                            className={`block px-4 py-2 text-sm transition-colors duration-200 ${
+                              location.pathname === subItem.path
+                                ? 'bg-blue-50 text-blue-600 font-semibold'
+                                : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                            }`}
+                            onClick={() => setIsPublicationDropdownOpen(false)}
+                          >
+                            {subItem.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      to={item.path}
+                      className={`font-medium transition-colors duration-300 hover:text-yellow-500 ${
+                        location.pathname === item.path 
+                          ? 'text-yellow-500' 
+                          : isScrolled || !isHomePage 
+                            ? 'text-gray-700' 
+                            : 'text-white'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                </div>
               ))}
             </nav>
 
@@ -208,22 +287,63 @@ const Header = () => {
                     </a>
                   </div>
                 </div>
+                <div className="mt-2">
+                  <Link
+                    to="/payment"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                  >
+                    Tithe/Offering
+                  </Link>
+                </div>
               </div>
 
               {/* Mobile Main Menu Items */}
               {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block w-full text-left px-6 py-3 transition-colors duration-200 ${
-                    location.pathname === item.path
-                      ? 'bg-blue-50 text-blue-800 font-semibold'
-                      : 'text-gray-700 hover:bg-blue-50 hover:text-blue-800'
-                  }`}
-                >
-                  {item.label}
-                </Link>
+                <div key={item.path}>
+                  {item.hasDropdown ? (
+                    <div>
+                      <div className={`block w-full text-left px-6 py-3 transition-colors duration-200 ${
+                        location.pathname.startsWith('/publication') || 
+                        location.pathname === '/announcement' || 
+                        location.pathname === '/special-event'
+                          ? 'bg-blue-50 text-blue-800 font-semibold'
+                          : 'text-gray-700 hover:bg-blue-50 hover:text-blue-800'
+                      }`}>
+                        {item.label}
+                      </div>
+                      {/* Mobile Sub-menu */}
+                      <div className="pl-4 border-l-2 border-gray-200 ml-6">
+                        {item.subItems?.map((subItem) => (
+                          <Link
+                            key={subItem.path}
+                            to={subItem.path}
+                            onClick={() => setIsMenuOpen(false)}
+                            className={`block w-full text-left px-6 py-2 text-sm transition-colors duration-200 ${
+                              location.pathname === subItem.path
+                                ? 'bg-blue-50 text-blue-800 font-semibold'
+                                : 'text-gray-600 hover:bg-blue-50 hover:text-blue-800'
+                            }`}
+                          >
+                            {subItem.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      to={item.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`block w-full text-left px-6 py-3 transition-colors duration-200 ${
+                        location.pathname === item.path
+                          ? 'bg-blue-50 text-blue-800 font-semibold'
+                          : 'text-gray-700 hover:bg-blue-50 hover:text-blue-800'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                </div>
               ))}
             </div>
           )}
