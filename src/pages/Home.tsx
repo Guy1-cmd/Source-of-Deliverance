@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown, Heart, Users, Book, Star, Calendar, Clock, MapPin, Download, User, Bell, Megaphone, BookOpen } from 'lucide-react';
+import { ChevronDown, Heart, Users, Book, Star, Calendar, Clock, MapPin, Download, User, Bell, Megaphone, BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
 import GallerySlider from '../components/GallerySlider';
 import {
   fetchFeaturedGalleryImages,
@@ -22,6 +22,70 @@ const Home = () => {
   const [weeklyPrograms, setWeeklyPrograms] = useState<WeeklyProgram[]>([]);
   const [publications, setPublications] = useState<Publication[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentHeroImageIndex, setCurrentHeroImageIndex] = useState(0);
+  const [isHeroAutoPlaying, setIsHeroAutoPlaying] = useState(true);
+
+  // Hero section images from gallery
+  const heroImages = [
+    {
+      url: "https://images.pexels.com/photos/8468660/pexels-photo-8468660.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      title: "Sunday Worship Service",
+      description: "Experience the presence of God in worship"
+    },
+    {
+      url: "https://images.pexels.com/photos/7169074/pexels-photo-7169074.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      title: "Community Outreach",
+      description: "Serving our community with love"
+    },
+    {
+      url: "https://images.pexels.com/photos/6994822/pexels-photo-6994822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      title: "Youth Ministry",
+      description: "Empowering the next generation"
+    },
+    {
+      url: "https://images.pexels.com/photos/8468659/pexels-photo-8468659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      title: "Baptism Ceremony",
+      description: "Celebrating new life in Christ"
+    },
+    {
+      url: "https://images.pexels.com/photos/8468661/pexels-photo-8468661.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      title: "Prayer Meeting",
+      description: "Coming together in prayer"
+    },
+    {
+      url: "https://images.pexels.com/photos/7169056/pexels-photo-7169056.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      title: "Fellowship Dinner",
+      description: "Building community through fellowship"
+    }
+  ];
+
+  // Auto-slide functionality for hero
+  useEffect(() => {
+    if (!isHeroAutoPlaying) return;
+
+    const interval = setInterval(() => {
+      setCurrentHeroImageIndex((prevIndex) => 
+        prevIndex === heroImages.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isHeroAutoPlaying, heroImages.length]);
+
+  const goToHeroPrevious = () => {
+    setCurrentHeroImageIndex(currentHeroImageIndex === 0 ? heroImages.length - 1 : currentHeroImageIndex - 1);
+    setIsHeroAutoPlaying(false);
+  };
+
+  const goToHeroNext = () => {
+    setCurrentHeroImageIndex(currentHeroImageIndex === heroImages.length - 1 ? 0 : currentHeroImageIndex + 1);
+    setIsHeroAutoPlaying(false);
+  };
+
+  const goToHeroSlide = (index: number) => {
+    setCurrentHeroImageIndex(index);
+    setIsHeroAutoPlaying(false);
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -122,25 +186,49 @@ const Home = () => {
 
   return (
     <div>
-      {/* Hero Section - Updated padding to account for both menus */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: 'url(https://images.pexels.com/photos/301599/pexels-photo-301599.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)'
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-800/60"></div>
+      {/* Hero Section with Photo Slider */}
+      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        {/* Background Image Slider */}
+        <div className="absolute inset-0">
+          {heroImages.map((image, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentHeroImageIndex ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <div 
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105"
+                style={{
+                  backgroundImage: `url(${image.url})`
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-800/60"></div>
+              </div>
+            </div>
+          ))}
         </div>
-        
+
+        {/* Hero Content */}
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
             Welcome to<br />
             <span className="text-yellow-400">Source of Deliverance</span>
           </h1>
-          <p className="text-xl md:text-2xl mb-8 font-light leading-relaxed">
+          <p className="text-xl md:text-2xl mb-4 font-light leading-relaxed">
             A place where faith meets community, and miracles happen daily
           </p>
+          
+          {/* Current Image Description */}
+          <div className="mb-8 bg-black/30 backdrop-blur-sm rounded-lg p-4 max-w-md mx-auto">
+            <h3 className="text-lg font-semibold text-yellow-300 mb-1">
+              {heroImages[currentHeroImageIndex].title}
+            </h3>
+            <p className="text-sm text-gray-200">
+              {heroImages[currentHeroImageIndex].description}
+            </p>
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/services"
@@ -157,9 +245,62 @@ const Home = () => {
           </div>
         </div>
 
+        {/* Hero Slider Navigation */}
+        <div className="absolute inset-0 z-20 pointer-events-none">
+          {/* Navigation Arrows */}
+          <button
+            onClick={goToHeroPrevious}
+            className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 pointer-events-auto group"
+          >
+            <ChevronLeft size={24} className="group-hover:scale-110 transition-transform" />
+          </button>
+          
+          <button
+            onClick={goToHeroNext}
+            className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 pointer-events-auto group"
+          >
+            <ChevronRight size={24} className="group-hover:scale-110 transition-transform" />
+          </button>
+
+          {/* Dots Indicator */}
+          <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 flex space-x-3 pointer-events-auto">
+            {heroImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToHeroSlide(index)}
+                className={`w-4 h-4 rounded-full transition-all duration-300 hover:scale-110 ${
+                  index === currentHeroImageIndex 
+                    ? 'bg-yellow-400 scale-110 shadow-lg' 
+                    : 'bg-white/50 hover:bg-white/70'
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* Auto-play Toggle */}
+          <div className="absolute top-28 right-6 pointer-events-auto">
+            <button
+              onClick={() => setIsHeroAutoPlaying(!isHeroAutoPlaying)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                isHeroAutoPlaying 
+                  ? 'bg-green-500/80 text-white shadow-lg' 
+                  : 'bg-white/20 text-white hover:bg-white/30'
+              }`}
+            >
+              {isHeroAutoPlaying ? '⏸ Auto' : '▶ Manual'}
+            </button>
+          </div>
+
+          {/* Image Counter */}
+          <div className="absolute bottom-6 right-6 bg-black/40 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm pointer-events-auto">
+            {currentHeroImageIndex + 1} / {heroImages.length}
+          </div>
+        </div>
+
+        {/* Scroll Down Button */}
         <button
           onClick={scrollToNext}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce z-30"
         >
           <ChevronDown size={32} />
         </button>
