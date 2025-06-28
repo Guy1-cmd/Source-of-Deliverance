@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, Heart, Users, Book, Star, Calendar, Clock, MapPin, Download, User, Bell, Megaphone, BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
-import GallerySlider from '../components/GallerySlider';
 import {
-  fetchFeaturedGalleryImages,
   fetchLatestAnnouncements,
   fetchFeaturedSpecialEvents,
   fetchWeeklyPrograms,
   fetchFeaturedPublications,
-  GalleryImage,
   Announcement,
   SpecialEvent,
   WeeklyProgram,
@@ -16,7 +13,6 @@ import {
 } from '../data/mockDatabase';
 
 const Home = () => {
-  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [specialEvents, setSpecialEvents] = useState<SpecialEvent[]>([]);
   const [weeklyPrograms, setWeeklyPrograms] = useState<WeeklyProgram[]>([]);
@@ -91,20 +87,17 @@ const Home = () => {
     const loadData = async () => {
       try {
         const [
-          galleryData,
           announcementsData,
           eventsData,
           programsData,
           publicationsData
         ] = await Promise.all([
-          fetchFeaturedGalleryImages(),
           fetchLatestAnnouncements(4),
           fetchFeaturedSpecialEvents(),
           fetchWeeklyPrograms(),
           fetchFeaturedPublications()
         ]);
 
-        setGalleryImages(galleryData);
         setAnnouncements(announcementsData);
         setSpecialEvents(eventsData);
         setWeeklyPrograms(programsData);
@@ -304,32 +297,6 @@ const Home = () => {
         >
           <ChevronDown size={32} />
         </button>
-      </section>
-
-      {/* Gallery Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Church Life Gallery
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Glimpses of our vibrant church community and the amazing things God is doing in our midst
-            </p>
-          </div>
-          
-          <GallerySlider images={galleryImages} />
-          
-          <div className="text-center mt-8">
-            <Link
-              to="/gallery"
-              className="inline-flex items-center bg-blue-800 hover:bg-blue-900 text-white font-semibold py-3 px-6 rounded-full transition-colors duration-300"
-            >
-              View Full Gallery
-              <ChevronDown className="w-4 h-4 ml-2 rotate-[-90deg]" />
-            </Link>
-          </div>
-        </div>
       </section>
 
       {/* Announcements Section */}
