@@ -49,12 +49,12 @@ const Header = () => {
               >
                 Advertise
               </a>
-              <a 
-                href="#register" 
+              <Link 
+                to="/login" 
                 className="text-gray-300 hover:text-yellow-400 transition-colors duration-200 font-medium"
               >
                 Register
-              </a>
+              </Link>
             </div>
 
             {/* Right Side - Social Media and Search */}
@@ -189,9 +189,9 @@ const Header = () => {
                     <a href="#advertise" className="text-gray-600 hover:text-blue-800">
                       Advertise
                     </a>
-                    <a href="#register" className="text-gray-600 hover:text-blue-800">
+                    <Link to="/login" className="text-gray-600 hover:text-blue-800">
                       Register
-                    </a>
+                    </Link>
                   </div>
                   <div className="flex space-x-3">
                     <a href="#" className="text-gray-600 hover:text-blue-800">
