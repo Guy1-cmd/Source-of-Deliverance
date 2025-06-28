@@ -52,7 +52,14 @@ const Login = () => {
             <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-2xl p-8 text-center mb-8 text-white shadow-2xl">
               <CheckCircle className="w-16 h-16 mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Welcome Back!</h3>
-              <p className="text-green-100">You have been successfully logged in.</p>
+              <p className="text-green-100 mb-4">You have been successfully logged in.</p>
+              <Link
+                to="/register"
+                className="inline-flex items-center bg-white/20 hover:bg-white/30 text-white font-semibold py-2 px-6 rounded-full transition-colors duration-300"
+              >
+                Continue to Registration
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
             </div>
           )}
 

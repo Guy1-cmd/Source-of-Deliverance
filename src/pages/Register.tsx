@@ -161,12 +161,12 @@ const Register = () => {
             <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-2xl p-8 text-center mb-8 text-white shadow-2xl">
               <CheckCircle className="w-16 h-16 mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-2">Registration Successful!</h3>
-              <p className="text-green-100 mb-4">Welcome to our church family! We'll be in touch soon.</p>
+              <p className="text-green-100 mb-4">Welcome to our church family! You can now proceed to make your tithe and offering payments.</p>
               <Link
                 to="/payment"
-                className="inline-flex items-center bg-white/20 hover:bg-white/30 text-white font-semibold py-2 px-6 rounded-full transition-colors duration-300"
+                className="inline-flex items-center bg-white/20 hover:bg-white/30 text-white font-semibold py-3 px-6 rounded-full transition-colors duration-300"
               >
-                Make a Tithe/Offering Payment
+                Continue to Tithe/Offering Payment
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </div>
