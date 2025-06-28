@@ -149,14 +149,6 @@ const Header = () => {
                   </button>
                 )}
               </div>
-
-              {/* Payment Link */}
-              <Link
-                to="/payment"
-                className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm font-medium transition-colors duration-200"
-              >
-                Tithe/Offering
-              </Link>
             </div>
           </div>
         </div>
@@ -286,15 +278,6 @@ const Header = () => {
                       <Youtube size={16} />
                     </a>
                   </div>
-                </div>
-                <div className="mt-2">
-                  <Link
-                    to="/payment"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200"
-                  >
-                    Tithe/Offering
-                  </Link>
                 </div>
               </div>
 
