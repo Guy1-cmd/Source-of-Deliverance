@@ -48,17 +48,77 @@ const Register = () => {
     'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'
   ];
 
-  // Rwanda provinces (as example - can be adapted for other countries)
-  const provinces = [
-    'Kigali City', 'Eastern Province', 'Northern Province', 'Southern Province', 'Western Province'
-  ];
+  // Rwanda administrative divisions
+  const rwandaData = {
+    'Kigali City': {
+      'Gasabo': ['Bumbogo', 'Gatsata', 'Jali', 'Gikomero', 'Gisozi', 'Jabana', 'Kinyinya', 'Ndera', 'Nduba', 'Rusororo', 'Rutunga', 'Kacyiru', 'Kimihurura', 'Kimisagara', 'Remera'],
+      'Kicukiro': ['Gahanga', 'Gatenga', 'Gikondo', 'Kagarama', 'Kanombe', 'Kicukiro', 'Kigarama', 'Masaka', 'Niboye', 'Nyarugunga'],
+      'Nyarugenge': ['Gitega', 'Kanyinya', 'Kigali', 'Kimisagara', 'Mageragere', 'Muhima', 'Nyakabanda', 'Nyamirambo', 'Nyarugenge', 'Rwezamenyo']
+    },
+    'Eastern Province': {
+      'Bugesera': ['Gashora', 'Juru', 'Kamabuye', 'Ntarama', 'Mayange', 'Musenyi', 'Mwogo', 'Ngeruka', 'Nyamata', 'Nyarugenge', 'Rilima', 'Ruhuha', 'Rweru', 'Shyara', 'Shyorongi'],
+      'Gatsibo': ['Gasange', 'Gatsibo', 'Gitoki', 'Kageyo', 'Kiramuruzi', 'Kiziguro', 'Muhura', 'Murambi', 'Ngarama', 'Nyagihanga', 'Remera', 'Rugarama', 'Rwimbogo'],
+      'Kayonza': ['Gahini', 'Kabare', 'Kabarondo', 'Mukarange', 'Murama', 'Murundi', 'Mwiri', 'Ndego', 'Nyamirama', 'Rukara', 'Ruramira', 'Rwinkwavu'],
+      'Kirehe': ['Gatore', 'Kigarama', 'Kigina', 'Kirehe', 'Mahama', 'Mpanga', 'Musaza', 'Mushikiri', 'Nasho', 'Nyamugali', 'Nyarubuye'],
+      'Ngoma': ['Gashanda', 'Jarama', 'Karembo', 'Kazo', 'Mugesera', 'Murama', 'Mutenderi', 'Remera', 'Rukira', 'Rukumberi', 'Sake', 'Zaza'],
+      'Nyagatare': ['Gatunda', 'Karangazi', 'Katabagemu', 'Kiyombe', 'Matimba', 'Mimuli', 'Mukama', 'Musheri', 'Nyagatare', 'Rukomo', 'Rwempasha', 'Rwimiyaga', 'Tabagwe'],
+      'Rwamagana': ['Fumbwe', 'Gahengeri', 'Gishari', 'Karenge', 'Kigabiro', 'Muhazi', 'Munyaga', 'Munyiginya', 'Musha', 'Muyumbu', 'Mwulire', 'Nzige', 'Rubona', 'Rwamagana']
+    },
+    'Northern Province': {
+      'Burera': ['Bungwe', 'Butaro', 'Cyanika', 'Cyeru', 'Gahunga', 'Gatebe', 'Gitovu', 'Kagogo', 'Kinoni', 'Kinyababa', 'Kivuye', 'Nemba', 'Rugarama', 'Rugendabari', 'Ruhunde', 'Rusarabuye', 'Rwerere'],
+      'Gakenke': ['Busengo', 'Coko', 'Cyabingo', 'Gakenke', 'Gashenyi', 'Mugunga', 'Janja', 'Kamubuga', 'Karambo', 'Kivuruga', 'Mataba', 'Minazi', 'Muhondo', 'Muyongwe', 'Muzo', 'Nemba', 'Ruli', 'Rusasa', 'Rushashi'],
+      'Gicumbi': ['Bukure', 'Bwisige', 'Byumba', 'Cyumba', 'Gicumbi', 'Kaniga', 'Manyagiro', 'Miyove', 'Kageyo', 'Mukarange', 'Muko', 'Mutete', 'Nyamiyaga', 'Nyankenke', 'Rubaya', 'Rukomo', 'Rushaki', 'Rutare', 'Ruvune', 'Rwamiko', 'Shangasha'],
+      'Musanze': ['Busogo', 'Cyuve', 'Gacaca', 'Gashaki', 'Gataraga', 'Kimonyi', 'Kinigi', 'Muhoza', 'Muko', 'Musanze', 'Nkotsi', 'Nyange', 'Remera', 'Rwaza', 'Shingiro'],
+      'Rulindo': ['Base', 'Burega', 'Bushoki', 'Buyoga', 'Cyinzuzi', 'Cyungo', 'Kinihira', 'Kisaro', 'Masoro', 'Mbogo', 'Murambi', 'Ngoma', 'Ntarabana', 'Rukozo', 'Rusiga', 'Shyorongi', 'Tumba']
+    },
+    'Southern Province': {
+      'Gisagara': ['Gikonko', 'Gishubi', 'Kansi', 'Kibirizi', 'Kigembe', 'Mamba', 'Muganza', 'Mugombwa', 'Mukindo', 'Ndora', 'Nyanza', 'Save'],
+      'Huye': ['Gishamvu', 'Karama', 'Kigoma', 'Kinazi', 'Maraba', 'Mbazi', 'Mukura', 'Ngoma', 'Ruhashya', 'Rusatira', 'Rwaniro', 'Simbi', 'Tumba'],
+      'Kamonyi': ['Gacurabwenge', 'Karama', 'Kayenzi', 'Kayumbu', 'Mugina', 'Musambira', 'Nyamiyaga', 'Nyarubaka', 'Runda', 'Rugalika', 'Ruzo', 'Sholi'],
+      'Muhanga': ['Cyeza', 'Kabacuzi', 'Kibangu', 'Kiyumba', 'Muhanga', 'Mukura', 'Mushishiro', 'Nyabinoni', 'Nyamabuye', 'Nyarubaka', 'Rongi', 'Rugendabari'],
+      'Nyamagabe': ['Buruhukiro', 'Cyanika', 'Gasaka', 'Gatare', 'Kaduha', 'Kamegeri', 'Kibirizi', 'Kibumbwe', 'Kitabi', 'Mbazi', 'Mugano', 'Musange', 'Musebeya', 'Mushubi', 'Nkomane', 'Tare', 'Uwinkingi'],
+      'Nyanza': ['Busasamana', 'Busoro', 'Cyabakamyi', 'Kibirizi', 'Kigoma', 'Mukingo', 'Muyira', 'Ntyazo', 'Nyagisozi', 'Rwabicuma'],
+      'Nyaruguru': ['Cyahinda', 'Gatare', 'Kibeho', 'Kibumbwe', 'Kivu', 'Mata', 'Munini', 'Ngera', 'Ngoma', 'Nyabimata', 'Nyagisozi', 'Ruheru', 'Rusenge'],
+      'Ruhango': ['Bweramana', 'Byimana', 'Kabagari', 'Kinazi', 'Kinihira', 'Mbuye', 'Muhanga', 'Ntongwe', 'Ruhango']
+    },
+    'Western Province': {
+      'Karongi': ['Bwishyura', 'Gashari', 'Gishyita', 'Gisovu', 'Gitesi', 'Murambi', 'Mutuntu', 'Rugabano', 'Ruganda', 'Rwankuba'],
+      'Ngororero': ['Bwira', 'Gatumba', 'Hindiro', 'Kabaya', 'Kageyo', 'Kavumu', 'Matyazo', 'Muhanda', 'Muhororo', 'Ndaro', 'Ngororero', 'Nyange', 'Sovu'],
+      'Nyabihu': ['Bigogwe', 'Jenda', 'Jomba', 'Kabatwa', 'Karago', 'Kintobo', 'Mukamira', 'Muringa', 'Rambura', 'Rugera', 'Rurembo', 'Shyira'],
+      'Nyamasheke': ['Bushekeri', 'Bushenge', 'Cyato', 'Gihombo', 'Kagano', 'Kanjongo', 'Karambi', 'Karengera', 'Kirimbi', 'Macuba', 'Mahembe', 'Nyabitekeri', 'Rangiro', 'Ruharambuga', 'Shangi'],
+      'Rubavu': ['Bugeshi', 'Busasamana', 'Cyanzarwe', 'Gisenyi', 'Kanama', 'Kanzenze', 'Mudende', 'Nyakiliba', 'Nyamyumba', 'Rubavu', 'Rugerero'],
+      'Rusizi': ['Butare', 'Bugarama', 'Gashonga', 'Giheke', 'Gihundwe', 'Gitambi', 'Kamembe', 'Muganza', 'Mururu', 'Nkanka', 'Nkombo', 'Nyakabuye', 'Nyakarenzo', 'Rwimbogo'],
+      'Rutsiro': ['Boneza', 'Gihango', 'Kigeyo', 'Kivumu', 'Manihira', 'Mukura', 'Musasa', 'Mushonyi', 'Mushubati', 'Nyabirasi', 'Ruhango', 'Rusebeya']
+    }
+  };
+
+  const provinces = Object.keys(rwandaData);
+  const districts = formData.province ? Object.keys(rwandaData[formData.province] || {}) : [];
+  const sectors = formData.province && formData.district ? rwandaData[formData.province]?.[formData.district] || [] : [];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    
+    // Reset dependent fields when parent changes
+    if (name === 'province') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value,
+        district: '',
+        sector: ''
+      }));
+    } else if (name === 'district') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value,
+        sector: ''
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -268,7 +328,7 @@ const Register = () => {
                 <div className="bg-yellow-50 rounded-2xl p-6">
                   <h4 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
                     <MapPin className="w-5 h-5 mr-2 text-yellow-600" />
-                    Physical Address
+                    Physical Address (Rwanda)
                   </h4>
                   
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -302,16 +362,25 @@ const Register = () => {
                       <label htmlFor="district" className="block text-sm font-semibold text-gray-700">
                         District *
                       </label>
-                      <input
-                        type="text"
-                        id="district"
-                        name="district"
-                        required
-                        value={formData.district}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 transition-all duration-200 bg-white text-gray-800 placeholder-gray-400"
-                        placeholder="Enter district"
-                      />
+                      <div className="relative">
+                        <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                        <select
+                          id="district"
+                          name="district"
+                          required
+                          value={formData.district}
+                          onChange={handleInputChange}
+                          disabled={!formData.province}
+                          className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 transition-all duration-200 bg-white text-gray-800 appearance-none disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        >
+                          <option value="">Select District</option>
+                          {districts.map((district) => (
+                            <option key={district} value={district}>
+                              {district}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
 
                     {/* Sector */}
@@ -319,16 +388,25 @@ const Register = () => {
                       <label htmlFor="sector" className="block text-sm font-semibold text-gray-700">
                         Sector *
                       </label>
-                      <input
-                        type="text"
-                        id="sector"
-                        name="sector"
-                        required
-                        value={formData.sector}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 transition-all duration-200 bg-white text-gray-800 placeholder-gray-400"
-                        placeholder="Enter sector"
-                      />
+                      <div className="relative">
+                        <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                        <select
+                          id="sector"
+                          name="sector"
+                          required
+                          value={formData.sector}
+                          onChange={handleInputChange}
+                          disabled={!formData.district}
+                          className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 transition-all duration-200 bg-white text-gray-800 appearance-none disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        >
+                          <option value="">Select Sector</option>
+                          {sectors.map((sector) => (
+                            <option key={sector} value={sector}>
+                              {sector}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
 
                     {/* Cell */}
